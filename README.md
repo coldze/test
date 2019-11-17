@@ -1,4 +1,4 @@
-###Test task
+## Test task
 
 Go version used: `1.13.4`
 
@@ -6,7 +6,7 @@ This is a test solution that caches data from http-data source to redis.
 I tried to consider most corner cases in this solution and created additional interfaces/functions to create a thin wrap
 over existing and standard implementations for me to able to test business logic.
 
-###Solution peculiarities
+### Solution peculiarities
 * I tried not to unmarshal/marshal structures that are being passed to external API, as this service shouldn't know about
 implementation details of external API. This will allow us not to modify our code, when implementation of external API changes,
 for example, a new field is added to response.
@@ -26,24 +26,24 @@ This project contains packages that can be treated as utility packages:
 and solution package:
 * [middleware](middleware/README.md) - core interfaces and implementations to solve the task
 
-###Unit tests
+### Unit tests
 Package `middleware/sources` is covered with tests, as it contains a core business logic.
 
 Package `miggleware/handles` contains unit-tests only for a common part of handlers.
 
-###Things to improve:
+### Things to improve:
 * add more unit-tests and reduce code duplication in existing tests. It is possible to add tests in `middleware` package
 and to cover code with tests in `utils` and `logs` packages.
 * add more logging. To keep code simple, I did less logging.
 * add more options to redis config.
 
-###Things to keep in mind:
+### Things to keep in mind:
 * if it is a production release, one should consider using https and providing `OPTIONS`-method for existing handlers.
  This can be done either using a proxy/load-balancer before hitting this service or (worst case scenario) via using
  ambassador template with `nginx` inside container, that will run in the same network-namespace as a container with this service.
 
 
-##How to run the service:
+## How to run the service:
 Modify file `./config.json`:
 * `api_url` - URL to external API (`https://my.test.com/v1/api/entity`).
 * `cache_ttl_seconds` - for how long we should keep cached value (in seconds).
@@ -53,9 +53,9 @@ command line**.
 * `app_timeout_seconds` - when `SIGINT` or `SIGTERM` is caught, application is informed and should stop withing this
 time interval, otherwise it will be killed.
 
-###Source code:
+### Source code:
 `go build && ./test -config=./config.json -redispwd='securepassword'`
-###Docker-way:
+### Docker-way:
 We will pull redis container and run it without any authentication.
 1. Create a redis container:
     * `docker run -d --name redistest redis:latest`
@@ -81,7 +81,7 @@ Also you can use precompiled container ([this one](https://hub.docker.com/reposi
 
 `docker run -d -v $(pwd)/build/config.json:/go/src/app/config.json --network=container:redistest --name cachetest coldze/svctest -redispwd=""`
 
-###Sample tests:
+### Sample tests:
 Those commands can be executed both from host and from inside container, but from root of repo (json files are required for post/put methods):
 * GET: `curl http://<service-container-ip>/v1/contact/<contact-id>`
 * POST: `curl -X "POST" -H "Content-Type: application/json" -d @test_data/post.json http://<service-container-ip>/v1/contact`
