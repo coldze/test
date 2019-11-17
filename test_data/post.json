@@ -1,0 +1,10 @@
+{
+  "contact": {
+    "FirstName": "Slarty",
+    "LastName": "Bartfast",
+    "Email": "test@slarty.com",
+    "custom": {
+      "string--Test--Field": "This is a test"
+    }
+  }
+}
