@@ -93,7 +93,7 @@ Those commands can be executed both from host and from inside container, but fro
 * POST: `curl -X "POST" -H "Content-Type: application/json" -d @test_data/post.json http://<service-container-ip>/v1/contact`
 * PUT: `curl -X "POST" -H "Content-Type: application/json" -d @test_data/put.json http://<service-container-ip>/v1/contact`
 
-##How to run unit-tests:
+## How to run unit-tests:
 From root of repo run following command:
 
 `go test ./...`
