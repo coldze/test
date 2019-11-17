@@ -26,6 +26,12 @@ This project contains packages that can be treated as utility packages:
 and solution package:
 * [middleware](middleware/README.md) - core interfaces and implementations to solve the task
 
+### Endpoints:
+* GET `http://<binded-host:binded-port>/v1/contact/<contact-id>` - gets information about contact
+* POST `http://<binded-host:binded-port>/v1/contact` - creates/updates contact (depends on behaviour of external API)
+* PUT `http://<binded-host:binded-port>/v1/contact` - updates contact (depends on behaviour of external API)
+* GET `http://<binded-host:binded-port>/ping` - health check endpoint
+
 ### Unit tests
 Package `middleware/sources` is covered with tests, as it contains a core business logic.
 
