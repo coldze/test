@@ -23,6 +23,8 @@ func makeLoggerContext(controller *gomock.Controller) (context.Context, *mocks.M
 	return utils.SetLogger(context.Background(), logger), logger
 }
 
+
+//TODO: I'm missing tests for panic handling. Will add them later this evening
 func TestHttpHandler(t *testing.T) {
 	data := "some random data"
 
