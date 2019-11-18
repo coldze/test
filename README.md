@@ -101,4 +101,5 @@ From root of repo run following command:
 `go test ./...`
 
 With coverage:
+
 `go test -cover -coverprofile=coverage.out ./... && go tool cover -html=coverage.out`
