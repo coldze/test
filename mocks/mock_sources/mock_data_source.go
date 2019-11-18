@@ -7,6 +7,7 @@ package mock_sources
 import (
 	"context"
 	"github.com/golang/mock/gomock"
+	"github.com/coldze/test/logic"
 	"reflect"
 )
 
