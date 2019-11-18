@@ -26,7 +26,7 @@ This project contains packages that can be treated as utility packages:
 * consts - list of consts used in this repo
 
 and solution package:
-* [middleware](middleware/README.md) - core interfaces and implementations to solve the task
+* [logic](logic/README.md) - core interfaces and implementations to solve the task
 
 ### Endpoints:
 * GET `http://<binded-host:binded-port>/v1/contact/<contact-id>` - gets information about contact
@@ -35,12 +35,12 @@ and solution package:
 * GET `http://<binded-host:binded-port>/ping` - health check endpoint
 
 ### Unit tests
-Package `middleware/sources` is covered with tests, as it contains a core business logic.
+Package `logic/sources` is covered with tests, as it contains a core business logic.
 
-Package `miggleware/handles` contains unit-tests only for a common part of handlers.
+Package `logic/handles` contains unit-tests only for a common part of handlers.
 
 ### Things to improve:
-* add more unit-tests and reduce code duplication in existing tests. It is possible to add tests in `middleware` package
+* add more unit-tests and reduce code duplication in existing tests. It is possible to add few more tests in `logic` package
 and to cover code with tests in `utils` and `logs` packages.
 * add more logging. To keep code simple, I did less logging.
 * add more options to redis config.
@@ -91,11 +91,14 @@ Also you can use precompiled container ([this one](https://hub.docker.com/reposi
 
 ### Sample tests:
 Those commands can be executed both from host and from inside container, but from root of repo (json files are required for post/put methods):
-* GET: `curl http://<service-container-ip>/v1/contact/<contact-id>`
-* POST: `curl -X "POST" -H "Content-Type: application/json" -d @test_data/post.json http://<service-container-ip>/v1/contact`
-* PUT: `curl -X "POST" -H "Content-Type: application/json" -d @test_data/put.json http://<service-container-ip>/v1/contact`
+* GET: `curl -H "autopilotapikey: <your-api-key>" http://<service-container-ip>/v1/contact/<contact-id>`
+* POST: `curl -X "POST" -H "autopilotapikey: <your-api-key>" -H "Content-Type: application/json" -d @test_data/post.json http://<service-container-ip>/v1/contact`
+* PUT: `curl -X "POST" -H "autopilotapikey: <your-api-key>" -H "Content-Type: application/json" -d @test_data/put.json http://<service-container-ip>/v1/contact`
 
 ## How to run unit-tests:
 From root of repo run following command:
 
 `go test ./...`
+
+With coverage:
+`go test -cover -coverprofile=coverage.out ./... && go tool cover -html=coverage.out`

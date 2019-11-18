@@ -9,10 +9,10 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"github.com/coldze/test/logic"
+	"github.com/coldze/test/logic/handles"
+	"github.com/coldze/test/logic/sources"
 	"github.com/coldze/test/logs"
-	"github.com/coldze/test/middleware"
-	"github.com/coldze/test/middleware/handles"
-	"github.com/coldze/test/middleware/sources"
 	"github.com/coldze/test/utils"
 )
 
@@ -47,9 +47,9 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 //I've put it here, because it is dependent on gorilla/mux, I didn't want to spoil business-logic code with such dependencies
 //This function can be replaced by our own implementation with regex or other manipulations with strings
 //Didn't want to re-implement that logic, as this code is already dependent on gorilla mux, decided to use it's feature
-func NewGetVariableFromRequest(varName string) middleware.RequestDataExtractor {
-	return func(r middleware.HttpRequest) ([]byte, error) {
-		vars := mux.Vars(r.GetRawRequest())
+func NewGetVariableFromRequest(varName string) logic.RequestDataExtractor {
+	return func(r *http.Request) ([]byte, error) {
+		vars := mux.Vars(r)
 		value, ok := vars[varName]
 		if !ok {
 			return nil, fmt.Errorf("Failed to find  '%v'", varName)
@@ -60,9 +60,9 @@ func NewGetVariableFromRequest(varName string) middleware.RequestDataExtractor {
 
 func buildRoutes(dataSource sources.DataSource, logger logs.Logger) http.Handler {
 	getData := NewGetVariableFromRequest(CONTACT_ID_VARIABLE)
-	getHandler := handles.NewGetHandler(logger, dataSource, getData)
-	createHandler := handles.NewPostHandler(logger, dataSource)
-	updateHandler := handles.NewPutHandler(logger, dataSource)
+	getHandler := handles.NewGetHandler(handles.NewDefaultLoggerFactory(logs.NewPrefixedLogger(logger, "[GET]")), dataSource, getData)
+	createHandler := handles.NewPostHandler(handles.NewDefaultLoggerFactory(logs.NewPrefixedLogger(logger, "[POST]")), dataSource)
+	updateHandler := handles.NewPutHandler(handles.NewDefaultLoggerFactory(logs.NewPrefixedLogger(logger, "[PUT]")), dataSource)
 
 	router := mux.NewRouter()
 	router.Path(HEALTH_CHECK_PATH).HandlerFunc(healthCheck)

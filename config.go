@@ -10,8 +10,8 @@ import (
 )
 
 type redisCfg struct {
-	Address  string `json:"address"`
-	DB       int    `json:"db"`
+	Address string `json:"address"`
+	DB      int    `json:"db"`
 }
 
 type bindCfg struct {
@@ -20,7 +20,7 @@ type bindCfg struct {
 }
 
 type appCfg struct {
-	redisPassword string `json:"-"`
+	redisPassword     string   `json:"-"`
 	Api               string   `json:"api_url"`
 	CacheTtlSeconds   int      `json:"cache_ttl_seconds"`
 	AppTimeoutSeconds int      `json:"app_timeout_seconds"`
