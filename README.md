@@ -15,6 +15,8 @@ for example, a new field is added to response.
 done or not, so I decided not to cache them. That's why responses might differ - cache-miss `GET` requests will have all
 headers, provided by external API, cache-hit `GET` requests will have only `Content-Type` header, besides default ones.
 If it is required to cache headers - can be implemented rather easily, as there are corresponding abstractions in the code.
+* If you have a look at the code, you might notice that sometimes I use `interface`s to make abstraction over something and sometimes I define a type to `func`. I use interfaces when methods are related to one another and use common data/objects, and I use functions, when there will be an interface/object with a single method.
+* Mocks for unit-test where generated mostly by mockgen, unfortunately it can't mock functions, so function's mocks I did manually using the same approach.
 
 ### Contents
 This project contains packages that can be treated as utility packages:
