@@ -89,6 +89,8 @@ Also you can use precompiled container ([this one](https://hub.docker.com/reposi
 
 `docker run -d -v $(pwd)/build/config.json:/go/src/app/config.json --network=container:redistest --name cachetest coldze/svctest -redispwd=""`
 
+Container is build automatically via integration with `hub.docker.com`.
+
 ### Sample tests:
 Those commands can be executed both from host and from inside container, but from root of repo (json files are required for post/put methods):
 * GET: `curl -H "autopilotapikey: <your-api-key>" http://<service-container-ip>/v1/contact/<contact-id>`
